@@ -1,0 +1,26 @@
+const WHATSAPP="252616255551";
+const menu=[
+["Shuwaarmo","Shuwaarmo kulul oo dhadhan leh.",1,"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80"],
+["Hamburger","Burger macaan oo cusub.",3,"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"],
+["Chicken","Chicken crispy iyo spice macaan leh.",5,"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80"],
+["Pasta","Pasta kulul oo suugo leh.",6,"https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80"],
+["Rice","Rice buuxa oo cunto ahaan fiican.",7,"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"],
+["Combo Meal","Qado isku dhafan oo aad ku qanacdo.",8,"https://images.unsplash.com/photo-1606755962773-d324e3a0a8d6?auto=format&fit=crop&w=900&q=80"],
+["Family Special","Qoyska oo dhan ku filan.",9,"https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=80"]
+];
+let cart=JSON.parse(localStorage.getItem("sharma_cart")||"[]");
+const $=id=>document.getElementById(id);
+function renderMenu(){ $("menuGrid").innerHTML=menu.map((m,i)=>`<article class="menu-card"><img src="${m[3]}" alt="${m[0]}"><div class="menu-body"><h3>${m[0]}</h3><p>${m[1]}</p><span class="price">$${m[2]}</span><button class="add-btn" onclick="addToCart(${i})">+ Add</button></div></article>`).join("");}
+function save(){localStorage.setItem("sharma_cart",JSON.stringify(cart));renderCart();}
+function addToCart(i){let x=cart.find(a=>a.i===i);x?x.q++:cart.push({i,q:1});save();openCart();}
+function change(i,d){let x=cart.find(a=>a.i===i);if(!x)return;x.q+=d;if(x.q<=0)cart=cart.filter(a=>a.i!==i);save();}
+function renderCart(){let total=0,count=0;let html=cart.map(x=>{let m=menu[x.i],sub=m[2]*x.q;total+=sub;count+=x.q;return `<div class="cart-row"><div><b>${m[0]}</b><br><small>$${m[2]} × ${x.q} = $${sub.toFixed(2)}</small></div><div class="qty"><button onclick="change(${x.i},-1)">−</button><span>${x.q}</span><button onclick="change(${x.i},1)">+</button></div></div>`}).join("");$("cartItems").innerHTML=html||"<p style='color:#6b7280'>Cart-ku waa madhan.</p>";$("cartTotal").textContent="$"+total.toFixed(2);$("cartCount").textContent=count;}
+function openCart(){ $("cartDrawer").classList.add("open"); } function closeCart(){ $("cartDrawer").classList.remove("open");}
+function orderText(){let lines=cart.map(x=>{let m=menu[x.i];return `- ${m[0]} x${x.q} = $${(m[2]*x.q).toFixed(2)}`}).join("%0A");let total=cart.reduce((s,x)=>s+menu[x.i][2]*x.q,0);return {lines,total};}
+function checkout(){if(!cart.length)return alert("Cart-ku waa madhan.");let n=$("customerName").value.trim(),p=$("customerPhone").value.trim(),a=$("customerAddress").value.trim(),note=$("orderNote").value.trim();if(!n||!p||!a)return alert("Fadlan buuxi magaca, phone-ka iyo address-ka.");let pm=document.querySelector('input[name="payment"]:checked').value;let o=orderText();let msg=`Asc Sharma Fast Food!%0A%0AORDER%0A${o.lines}%0A%0ATotal: $${o.total.toFixed(2)}%0AName: ${encodeURIComponent(n)}%0APhone: ${encodeURIComponent(p)}%0AAddress: ${encodeURIComponent(a)}%0ANote: ${encodeURIComponent(note)}%0APayment: ${pm}`;localStorage.setItem("last_order",JSON.stringify({n,p,a,note,pm,total:o.total,items:cart,date:new Date().toISOString()}));if(pm==="whatsapp"){window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");}else if(pm==="stripe"){alert("Stripe waxaa loo baahan yahay Secret Key + server webhook. Waxaan ku daray integration-ready checkout-kan; ku xiro Stripe server-kaaga.");}else{alert("PayPal waxaa loo baahan yahay PayPal Client ID + server/webhook. Integration-ready ayaa la diyaariyey.");}}
+function reservation(e){e.preventDefault();let msg=`Asc Sharma Fast Food!%0A%0AReservation Request%0AName: ${encodeURIComponent($("resName").value)}%0APhone: ${encodeURIComponent($("resPhone").value)}%0ADate: ${$("resDate").value}%0ATime: ${$("resTime").value}%0AGuests: ${encodeURIComponent($("resGuests").value)}%0ANote: ${encodeURIComponent($("resNote").value)}`;window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");}
+function contact(e){e.preventDefault();let msg=`Asc Sharma Fast Food!%0A%0AName: ${encodeURIComponent($("msgName").value)}%0AEmail: ${encodeURIComponent($("msgEmail").value)}%0AMessage: ${encodeURIComponent($("msgText").value)}`;window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,"_blank");}
+$("cartBtn").onclick=openCart;$("openCart2").onclick=openCart;$("closeCart").onclick=closeCart;$("checkoutBtn").onclick=checkout;$("reservationForm").onsubmit=reservation;$("contactForm").onsubmit=contact;$("heroOrder").onclick=openCart;
+$("menuBtn").onclick=()=>{$("navLinks").classList.toggle("show");$("menuBtn").setAttribute("aria-expanded",$("navLinks").classList.contains("show"));};
+$("waFloat").href=`https://wa.me/${WHATSAPP}?text=Asc%20Sharma%20Fast%20Food%2C%20waxaan%20rabaa%20inaan%20dalbado%20cunto.`;
+renderMenu();renderCart();

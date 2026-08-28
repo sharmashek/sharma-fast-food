@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharma Fast Food</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero" id="home">
+<nav class="navbar"><div class="container nav-inner">
+<a class="logo" href="#home"><span class="logo-mark">SF</span><span>Sharma Fast Food</span></a>
+<button class="hamburger" id="menuBtn" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#menu">Menu</a></li><li><a href="#reservation">Reservation</a></li><li><a href="#contact">Contact</a></li>
+<li><button class="cart-nav" id="cartBtn">🛒 Cart <b id="cartCount">0</b></button></li>
+</ul>
+</div></nav>
+<div class="container hero-content">
+<span class="tag">Dhadhan iyo dharag noogu kaalay</span>
+<h1>Fast Food macaan, adeeg degdeg ah, iyo qiimo fiican</h1>
+<p>Shuwaarmo, hamburger, chicken, pasta, rice iyo family meals — dhadhan fiican, adeeg wanaagsan, iyo qiimo la awoodi karo.</p>
+<div class="hero-actions"><a class="btn btn-primary" href="#menu">View Menu</a><button class="btn btn-secondary" id="heroOrder">Order Now</button></div>
+</div>
+</header>
+
+<main>
+<section class="section" id="about"><div class="container">
+<div class="section-head"><h2>About Us</h2><p>Sharma Fast Food waa Somali fast food restaurant kuu keena cunto degdeg ah, dhadhan fiican, iyo adeeg la isku halayn karo.</p></div>
+<div class="about-grid"><div class="panel about-text"><h3>Ku soo dhowow meesha cunto macaan</h3><p>Waxaan ku iibinaa fast food tayo leh oo ku habboon qado, casho, iyo food-to-go.</p><p>Slogan-keennu waa: <strong>Dhadhan iyo dharag noogu kaalay.</strong></p><a class="btn btn-dark" href="#menu">See Our Food</a></div>
+<div class="panel stats"><div class="stat"><strong>Fast Food</strong><span>Cuntooyin degdeg ah oo macaan.</span></div><div class="stat"><strong>Online Order</strong><span>Dalbo WhatsApp ama payment online.</span></div><div class="stat"><strong>$1 - $9</strong><span>Qiimooyin la awoodi karo.</span></div></div></div>
+</div></section>
+
+<section class="section alt" id="menu"><div class="container">
+<div class="section-head"><h2>Our Menu</h2><p>Dooro cuntada aad rabto, ku dar cart-ka, kadibna dalbo.</p></div>
+<div class="menu-grid" id="menuGrid"></div>
+<div class="highlight"><h3>Dhadhan iyo dharag noogu kaalay</h3><p>Order-kaaga ku dir WhatsApp ama dooro online payment.</p></div>
+</div></section>
+
+<section class="section" id="reservation"><div class="container">
+<div class="section-head"><h2>Reservation</h2><p>Qabso table-kaaga; xogta waxaa lagu xaqiijin karaa WhatsApp.</p></div>
+<div class="booking-grid">
+<div class="panel booking-card"><h3>Book a Table</h3><form class="form" id="reservationForm">
+<input id="resName" required placeholder="Magacaaga"><input id="resPhone" required type="tel" placeholder="Phone Number">
+<input id="resDate" required type="date"><input id="resTime" required type="time">
+<select id="resGuests" required><option value="">Number of Guests</option><option>1 Person</option><option>2 People</option><option>3 People</option><option>4 People</option><option>5+ People</option></select>
+<textarea id="resNote" placeholder="Qoraal dheeraad ah"></textarea><button class="btn btn-primary" type="submit">Send Reservation</button>
+</form></div>
+<div class="panel booking-card"><h3>Order Now</h3><p>Dalabkaaga waxaad ku bixin kartaa online ama WhatsApp.</p>
+<div class="contact-list"><div class="contact-item"><strong>WhatsApp</strong><span>+252 61 625 5551</span></div><div class="contact-item"><strong>Opening Hours</strong><span>8:00 AM - 11:00 PM</span></div><div class="contact-item"><strong>Delivery Area</strong><span>Mogadishu, Banaadir</span></div></div>
+<button class="btn btn-primary full" id="openCart2">Open Cart</button></div>
+</div></div></section>
+
+<section class="section" id="contact"><div class="container">
+<div class="section-head"><h2>Contact Us</h2><p>Nala soo xiriir si aad u dalbato cunto ama u qabsato table.</p></div>
+<div class="booking-grid"><div class="panel booking-card"><h3>Restaurant Info</h3><div class="contact-list"><div class="contact-item"><strong>Phone</strong><span>+252 61 625 5551</span></div><div class="contact-item"><strong>Location</strong><span>Mogadishu, Banaadir, Somalia</span></div><div class="contact-item"><strong>Email</strong><span>sharmafastfood@gmail.com</span></div></div></div>
+<div class="panel booking-card"><h3>Send Message</h3><form class="form" id="contactForm"><input id="msgName" required placeholder="Magacaaga"><input id="msgEmail" type="email" placeholder="Email Address"><textarea id="msgText" required placeholder="Farriintaada"></textarea><button class="btn btn-dark" type="submit">Send Message</button></form></div></div>
+</div></section>
+</main>
+
+<div class="cart-drawer" id="cartDrawer"><div class="cart-panel"><div class="cart-head"><h2>Your Cart</h2><button id="closeCart">✕</button></div><div id="cartItems"></div><div class="cart-total"><span>Total</span><strong id="cartTotal">$0.00</strong></div>
+<div class="checkout"><input id="customerName" placeholder="Magacaaga" required><input id="customerPhone" placeholder="Phone Number" required><input id="customerAddress" placeholder="Delivery address" required><textarea id="orderNote" placeholder="Order note"></textarea>
+<div class="payment-methods"><label><input type="radio" name="payment" value="whatsapp" checked> WhatsApp / Cash</label><label><input type="radio" name="payment" value="stripe"> Card / Online</label><label><input type="radio" name="payment" value="paypal"> PayPal</label></div>
+<button class="btn btn-primary full" id="checkoutBtn">Checkout</button></div></div></div>
+
+<a class="whatsapp-float" id="waFloat" target="_blank">WhatsApp</a>
+<footer class="footer"><div class="container"><p>© 2026 Sharma Fast Food. All rights reserved. · <a href="admin.html">Admin</a></p></div></footer>
+<script src="script.js"></script>
+</body></html>
